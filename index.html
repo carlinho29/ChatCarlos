@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Halo</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/@halo-design/css/dist/halo.min.css">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-color: #ffffff;
+        }
+
+        .header-bar {
+            height: 8px;
+            background-color: #333333;
+            width: 100%;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            background-color: #ffffff;
+        }
+
+        .footer-bar {
+            height: 20px;
+            background-color: #d1e2c9; 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            border-top: 1px solid #c0d1b8;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #c9302c;
+            border-radius: 50%;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .icon-placeholder {
+            width: 12px;
+            height: 12px;
+            background-color: #111;
+            border-radius: 50%;
+        }
+        
+        .icon-square {
+            width: 12px;
+            height: 12px;
+            background-color: #eee;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-bar"></header>
+
+    <main class="main-content"></main>
+
+    <footer class="footer-bar">
+        <div class="status-dot"></div>
+        
+        <div class="action-icons">
+            <div class="icon-placeholder"></div>
+            <div class="icon-square"></div>
+        </div>
+    </footer>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; font-family: sans-serif; padding: 20px;">
+    
+    <h1 style="color: #2c3e50; font-size: 3rem; margin-bottom: 5px;">Carlos</h1>
+    
+    <p style="color: #7f8c8d; font-size: 1.2rem; margin-bottom: 30px;">Bem-vindo à sua sala de chat em tempo real</p>
+    
+    <div style="padding: 25px; border: 1px solid #e2e8f0; border-radius: 8px; width: 100%; max-width: 350px; text-align: center; background-color: #f8f9fa;">
+        <p style="font-weight: bold; color: #333; margin-bottom: 20px; font-size: 1.1rem;">Acesse sua conta</p>
+        
+        <button style="background-color: #3498db; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-size: 1rem; font-weight: bold;">
+            Entrar no Chat
+        </button>
+    </div>
+
+    <div style="margin-top: 60px; font-size: 0.9rem; color: #95a5a6;">
+        Desenvolvido por David Delgado
+    </div>
+
+</div>
+<script>
+    const mainContent = document.querySelector('.main-content');
+    const loginButton = document.querySelector('button');
+
+    if (loginButton && mainContent) {
+        loginButton.addEventListener('click', () => {
+            
+            mainContent.innerHTML = `
+                <div style="display: flex; flex-direction: column; height: 100%; padding: 20px; box-sizing: border-box; max-width: 800px; margin: 0 auto; width: 100%;">
+                    
+                    <h2 style="color: #2c3e50; text-align: center; margin-bottom: 20px;">Sala de Chat: Carlos</h2>
+                    
+                    <div id="chat-messages" style="flex-grow: 1; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8f9fa; margin-bottom: 15px; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; max-height: 60vh;">
+                        
+                        <div style="align-self: flex-start; background-color: #e2e8f0; padding: 10px; border-radius: 8px; max-width: 80%;">
+                            <span style="font-size: 0.8rem; color: #7f8c8d; display: block; margin-bottom: 4px;">Sistema</span>
+                            Bem-vindo ao chat Carlos! Digite sua mensagem abaixo.
+                        </div>
+
+                    </div>
+
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="message-input" autocomplete="off" placeholder="Digite sua mensagem..." style="flex-grow: 1; padding: 12px; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; outline: none;">
+                        <button id="send-button" style="background-color: #3498db; color: white; border: none; padding: 10px 25px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem;">Enviar</button>
+                    </div>
+                    
+                    <div style="margin-top: 25px; text-align: center; font-size: 0.9rem; color: #95a5a6;">
+                        Desenvolvido por David Delgado
+                    </div>
+
+                </div>
+            `;
+
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-button');
+            const chatMessages = document.getElementById('chat-messages');
+
+            const sendMessage = () => {
+                const text = messageInput.value.trim();
+                
+                if (text !== '') {
+                    const messageDiv = document.createElement('div');
+                    messageDiv.style.cssText = "align-self: flex-end; background-color: #3498db; color: white; padding: 10px; border-radius: 8px; max-width: 80%;";
+                    
+                    const senderSpan = document.createElement('span');
+                    senderSpan.style.cssText = "font-size: 0.8rem; color: #e0f7fa; display: block; margin-bottom: 4px; text-align: right;";
+                    senderSpan.textContent = "Você";
+                    
+                    const textNode = document.createTextNode(text);
+                    
+                    messageDiv.appendChild(senderSpan);
+                    messageDiv.appendChild(textNode);
+                    
+                    chatMessages.appendChild(messageDiv);
+                    messageInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            };
+
+            sendButton.addEventListener('click', sendMessage);
+
+            messageInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            messageInput.focus();
+        });
+    }
+</script>
+
+</body>
+</html>
